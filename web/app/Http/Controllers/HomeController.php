@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function index()
     {
         //
-        $posts = \App\Post::orderBy('created_at', 'DESC')->paginate(3);
+        $posts = \App\Post::orderBy('created_at', 'DESC')->paginate(6);
         $categories = \App\Category::all();
         // var_dump($posts);
         

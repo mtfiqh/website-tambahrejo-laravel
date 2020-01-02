@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Home
+Home
 @endsection
 
 @section('up-content')
@@ -13,20 +13,25 @@
     </ol>
     <div class="carousel-inner">
         @php
-            $first = true;
+        $first = true;
         @endphp
         @foreach ($slideshows as $slideshow)
-            <div class="carousel-item {{$first ? 'active' : ''}}">
-                <img class="d-block w-100" src="{{asset('storage/'.$slideshow->image)}}" alt="First slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>{{$slideshow->title}}</h5>
-                    <p class="card-text">{{substr(strip_tags($slideshow->body), 0, 250)}}</p>
-                    <a href="" class="btn btn-lg btn-block btn-primary">Baca Selengkapnya</a>
-                </div>
+        <div class="carousel-item {{$first ? 'active' : ''}}">
+            @if ($slideshow->image)
+                <img class="d-block w-100" src="{{asset('storage/'.$slideshow->image)}}" alt="{{$slideshow->title}}">
+            @else
+                <img class="d-block w-100" src="{{asset('storage/posts/default.png')}}" alt="{{$slideshow->title}}">
+            @endif
+            {{-- <img class="" src="{{asset('storage/'.$slideshow->image)}}" alt="First slide"> --}}
+            <div class="carousel-caption d-none d-md-block">
+                <h5>{{$slideshow->title}}</h5>
+                <p class="card-text">{{substr(strip_tags($slideshow->body), 0, 250)}}</p>
+                <a href="" class="btn btn-lg btn-block btn-primary">Baca Selengkapnya</a>
             </div>
-            @php
-                $first = false;
-            @endphp
+        </div>
+        @php
+        $first = false;
+        @endphp
         @endforeach
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -43,50 +48,17 @@
 @section('content')
 
 <style>
-.card-img-overlay-custom {
-  position: absolute;
-  top: 0;
-  right: 0;
-  /* bottom: 0; */
-  left: 0;
-  padding: 1.25rem;
-}
+    .card-img-overlay-custom {
+        position: absolute;
+        top: 0;
+        right: 0;
+        /* bottom: 0; */
+        left: 0;
+        padding: 1.25rem;
+    }
+
 </style>
-<div class="row mt-3">
-    <div class="col-sm-8">
-        <h2>Kegiatan Acara dan Berita</h2>
-        <hr />
-        @foreach ($posts as $post)
-        <div class="card mb-2">
-            <img class="card-img-top" src="{{asset('storage/'.$post->image)}}" alt="{{$post->title}}">
-            <div class="card-img-overlay-custom">
-                <div class="row">
-                    <div class="col-md-4">
-                        <p class="mt-2 ml-2 mr-2 text-center bg-danger text-light"><b>{{$post->category ? $post->category->name : ''}}</b></p>
-                    </div>
-                    <div class="col-md-4">
-                    </div>
-                    <div class="col-md-4">
-                        <p class="mt-2 ml-2 mr-2 text-center bg-primary text-light text-right">{{$post->published}}</p>
-                    </div>
-                </div>    
-            </div>
-
-            <div class="card-body">
-                
-                <a href="{{URL::to('/'.$post->slug)}}">
-                    <h3 class="mt-1 card-title">{{$post->title}}</h3>
-                </a>
-                
-                <p class="card-text">{{substr(strip_tags($post->body), 0, 250)}}</p>
-                <a href="{{URL::to('/'.$post->slug)}}" class="btn btn-block btn-primary">Baca Selengkapnya >></a>
-            </div>
-            
-        </div>
-        @endforeach
-
-    </div>
-
+{{-- <div class="row mt-3">
     <div class="col-sm-4">
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
@@ -94,14 +66,115 @@
             </li>
             @foreach ($categories as $category)
             <li class="list-group-item">{{$category->name}}</li>
-            @endforeach
+@endforeach
 
-        </ul>
+</ul>
+</div>
+<div class="col-sm-8">
+    <h2>Kegiatan Acara dan Berita</h2>
+    <hr />
+    @foreach ($posts as $post)
+    <div class="card mb-2">
+        <img class="card-img-top" src="{{asset('storage/'.$post->image)}}" alt="{{$post->title}}">
+        <div class="card-img-overlay-custom">
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="mt-2 ml-2 mr-2 text-center bg-danger text-light">
+                        <b>{{$post->category ? $post->category->name : ''}}</b></p>
+                </div>
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                    <p class="mt-2 ml-2 mr-2 text-center bg-primary text-light text-right">{{$post->published}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <a href="{{URL::to('/'.$post->slug)}}">
+                <h3 class="mt-1 card-title">{{$post->title}}</h3>
+            </a>
+
+            <p class="card-text">{{substr(strip_tags($post->body), 0, 250)}}</p>
+            <a href="{{URL::to('/'.$post->slug)}}" class="btn btn-block btn-primary">Baca Selengkapnya >></a>
+        </div>
+
     </div>
-    
+    @endforeach
+
+</div>
+
+
+
+<div class="col-md-12">
+    {{$posts->links()}}
+</div> --}}
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        <h3 class="text-center">Kegiatan Acara dan Berita</h3>
+    </div>
+</div>
+<hr />
+@php
+$i=1;
+@endphp
+@foreach ($posts as $post)
+@if ($i==1)
+    <div class="row">
+@endif
+
+    <div class="col-md-4">
+        <div class="card mb-2">
+            @if ($post->image)
+                <img class="card-img-top" src="{{asset('storage/'.$post->image)}}" alt="{{$post->title}}">
+            @else
+                <img class="card-img-top" src="{{asset('storage/posts/default.png')}}" alt="{{$post->title}}">
+            @endif
+            <div class="card-img-overlay-custom">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mt-2 ml-1  text-center bg-danger text-light">
+                            <b>{{$post->category ? $post->category->name : ''}}</b></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mt-2 mr-1 text-center bg-primary text-light text-right">{{$post->published}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <a href="{{URL::to('/'.$post->slug)}}">
+                    <h3 class="mt-1 card-title">{{$post->title}}</h3>
+                </a>
+
+                <p class="card-text">{{substr(strip_tags($post->body), 0, 250)}}</p>
+                <a href="{{URL::to('/'.$post->slug)}}" class="btn btn-block btn-primary">Baca Selengkapnya >></a>
+            </div>
+
+        </div>
+    </div>
+
+
+    @php
+    if($i==3){
+        echo "</div>";
+        $i=1;
+    }else{
+        $i++;
+    }
+@endphp
+@endforeach
+@if ($i!=3 && $i!=1)
+    </div>
+@endif
+
+<div class="row">
     <div class="col-md-12">
         {{$posts->links()}}
     </div>
-    
 </div>
+
 @endsection

@@ -24,7 +24,9 @@
     }
 </style>
     <div class="card mt-3 mb-3">
-        <img class="card-img-top" src="{{asset('storage/'.$post->image)}}" alt="{{$post->title}}">
+        @if($post->image)
+            <img class="card-img-top" src="{{asset('storage/'.$post->image)}}" alt="{{$post->title}}">
+        @endif
         <div class="card-body">
             {{-- <hr/> --}}
             {{-- <hr> --}}
@@ -35,7 +37,7 @@
             <a style="color:#bd081b;" class="ml-2" href=""><i class="fas fa-print"></i></a>
             <hr/>
             {{-- <hr> --}}
-            <small>{{$post->published}} |</small>
+            <p class="card-text"><small class="text-muted">{{$post->published}} |</small></p>
             <h1>@php echo strtoupper($post->title) @endphp</h1>
             {{-- <hr/> --}}
             <hr/>
