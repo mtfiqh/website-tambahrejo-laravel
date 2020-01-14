@@ -15,7 +15,11 @@ Route::get('/', 'HomeController@index');
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
-Route::get('/{slug}', 'HomeController@show');
+
+Route::get('/map', 'HomeController@maps');
+Route::get('/search', 'HomeController@search');
+Route::get('/{category}/', 'HomeController@category');
+Route::get('/{category}/{slug}', 'HomeController@show');
 
 
 

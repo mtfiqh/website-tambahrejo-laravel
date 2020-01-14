@@ -1,0 +1,1 @@
+{"displayFieldName":"","fieldAliases":{"FID":"FID","Id":"Id"},"geometryType":"esriGeometryPoint","spatialReference":{"wkid":32748,"latestWkid":32748},"fields":[{"name":"FID","type":"esriFieldTypeOID","alias":"FID"},{"name":"Id","type":"esriFieldTypeInteger","alias":"Id"}],"features":[{"attributes":{"FID":0,"Id":0},"geometry":{"x":503484.05375934887,"y":9405506.6169977486}}]}

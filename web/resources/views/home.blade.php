@@ -5,7 +5,7 @@ Home
 @endsection
 
 @section('up-content')
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+<div  id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -58,62 +58,22 @@ Home
     }
 
 </style>
-{{-- <div class="row mt-3">
-    <div class="col-sm-4">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <h4>Category</h4>
-            </li>
-            @foreach ($categories as $category)
-            <li class="list-group-item">{{$category->name}}</li>
-@endforeach
-
-</ul>
-</div>
-<div class="col-sm-8">
-    <h2>Kegiatan Acara dan Berita</h2>
-    <hr />
-    @foreach ($posts as $post)
-    <div class="card mb-2">
-        <img class="card-img-top" src="{{asset('storage/'.$post->image)}}" alt="{{$post->title}}">
-        <div class="card-img-overlay-custom">
-            <div class="row">
-                <div class="col-md-4">
-                    <p class="mt-2 ml-2 mr-2 text-center bg-danger text-light">
-                        <b>{{$post->category ? $post->category->name : ''}}</b></p>
-                </div>
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-4">
-                    <p class="mt-2 ml-2 mr-2 text-center bg-primary text-light text-right">{{$post->published}}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card-body">
-
-            <a href="{{URL::to('/'.$post->slug)}}">
-                <h3 class="mt-1 card-title">{{$post->title}}</h3>
-            </a>
-
-            <p class="card-text">{{substr(strip_tags($post->body), 0, 250)}}</p>
-            <a href="{{URL::to('/'.$post->slug)}}" class="btn btn-block btn-primary">Baca Selengkapnya >></a>
-        </div>
-
-    </div>
-    @endforeach
-
-</div>
-
-
-
-<div class="col-md-12">
-    {{$posts->links()}}
-</div> --}}
 
 <div class="row mt-3">
-    <div class="col-md-12">
-        <h3 class="text-center">Kegiatan Acara dan Berita</h3>
+    <div class="col-md-6">
+        <h3 class="text-left">Kegiatan Acara dan Berita</h3>
+    </div>
+    <div class="col-md-6 text-right">
+        <div class="dropdown ">
+            <button class="btn btn-warning dropdown-toggle" type="button" id="category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Filter Category
+            </button>
+            <div class="dropdown-menu" aria-labelledby="category">
+                @foreach ($categories as $category)
+                    <a class="dropdown-item" href="{{URL::to('/'.$category->slug)}}">{{$category->name}}</a>
+                @endforeach
+            </div>
+        </div>
     </div>
 </div>
 <hr />
@@ -135,23 +95,23 @@ $i=1;
             <div class="card-img-overlay-custom">
                 <div class="row">
                     <div class="col-md-6">
-                        <p class="mt-2 ml-1  text-center bg-danger text-light">
+                        <p class="mt-2 badge badge-danger text-light">
                             <b>{{$post->category ? $post->category->name : ''}}</b></p>
                     </div>
-                    <div class="col-md-6">
-                        <p class="mt-2 mr-1 text-center bg-primary text-light text-right">{{$post->published}}</p>
+                    <div class="col-md-6 text-right">
+                        <p class="mt-2 badge badge-primary text-light">{{$post->published}}</p>
                     </div>
                 </div>
             </div>
 
             <div class="card-body">
 
-                <a href="{{URL::to('/'.$post->slug)}}">
+                <a href="{{URL::to('/'.$post->category->slug.'/'.$post->slug)}}">
                     <h3 class="mt-1 card-title">{{$post->title}}</h3>
                 </a>
 
                 <p class="card-text">{{substr(strip_tags($post->body), 0, 250)}}</p>
-                <a href="{{URL::to('/'.$post->slug)}}" class="btn btn-block btn-primary">Baca Selengkapnya >></a>
+                <a href="{{URL::to('/'.$post->category->slug.'/'.$post->slug)}}" class="btn btn-block btn-primary">Baca Selengkapnya >></a>
             </div>
 
         </div>
@@ -167,10 +127,11 @@ $i=1;
     }
 @endphp
 @endforeach
-@if ($i!=3 && $i!=1)
+@if ($i==3 && $i!=1)
     </div>
 @endif
 
+    
 <div class="row">
     <div class="col-md-12">
         {{$posts->links()}}
